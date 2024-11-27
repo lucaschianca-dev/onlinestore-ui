@@ -7,17 +7,23 @@ interface SignupFormProps {
     email: string;
     password: string;
     fullName: string;
-    role: "USER" | "ADMIN";
+    role: "CLIENT" | "ADMIN"; // Garantindo que role seja "CLIENT" ou "ADMIN"
   }) => void;
   isLoading: boolean;
 }
 
 export default function SignupForm({ onSubmit, isLoading }: SignupFormProps) {
-  const [formData, setFormData] = useState({
+  // Definindo explicitamente o tipo de formData
+  const [formData, setFormData] = useState<{
+    email: string;
+    password: string;
+    fullName: string;
+    role: "CLIENT" | "ADMIN"; // Garantindo que `role` seja do tipo "CLIENT" ou "ADMIN"
+  }>({
     email: "",
     password: "",
     fullName: "",
-    role: "USER" as "USER" | "ADMIN", // Define o tipo explicitamente
+    role: "CLIENT", // Inicializando com um valor válido
   });
 
   const handleChange = (
@@ -29,7 +35,7 @@ export default function SignupForm({ onSubmit, isLoading }: SignupFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit(formData); // Passando o formData corretamente
   };
 
   return (
@@ -76,7 +82,7 @@ export default function SignupForm({ onSubmit, isLoading }: SignupFormProps) {
           required
           className="w-full px-3 py-2 border rounded-md"
         >
-          <option value="USER">Usuário</option>
+          <option value="CLIENT">Usuário</option>
           <option value="ADMIN">Administrador</option>
         </select>
       </div>
